@@ -1,0 +1,62 @@
+Keybinds.ArtifactActivate.DisplayName: Artifact Activate
+
+Items: {
+	AntlionChitin: {
+		DisplayName: Antlion Chitin
+		Tooltip: ""
+	}
+
+	SnakeOil: {
+		DisplayName: Snake Oil
+		Tooltip: Throws a potion that breaks on impact, healing players in a 10 block radius
+	}
+
+	Snakeskin: {
+		DisplayName: Snakeskin
+		Tooltip: ""
+	}
+
+	AntflingBow: {
+		DisplayName: Antfling Bow
+		Tooltip: Converts arrows into baby antlions
+	}
+
+	ChargerSpear: {
+		DisplayName: Charger Spear
+		Tooltip: ""
+	}
+
+	SnakeEyes: {
+		DisplayName: Snake Eyes
+		Tooltip:
+			'''
+			Increases luck
+			When activated, garuntees a critical strike for the next second with a 30 second cooldown
+			'''
+	}
+
+	SnakestrikeTechnique: {
+		DisplayName: Snakestrike Technique
+		Tooltip: Right click to throw spears
+	}
+}
+
+NPCs: {
+	Snake.DisplayName: Snake
+	Twister.DisplayName: Twister
+}
+
+Projectiles: {
+	SnakeOilProjectile.DisplayName: Snake Oil Projectile
+	AntflingBowAnt.DisplayName: Antfling Bow Ant
+	AntflingBowArrow.DisplayName: Antfling Bow Arrow
+	ChargerSpearProjectile.DisplayName: Charger Spear Projectile
+	SpearTechniqueProjectile.DisplayName: Spear Technique Projectile
+}
+
+Buffs: {
+	ArtifactCooldown: {
+		DisplayName: Artifact Cooldown
+		Description: Mods.Atlas.Buffs.ArtifactCooldown.Description
+	}
+}

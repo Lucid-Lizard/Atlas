@@ -1,0 +1,12 @@
+Atlas is a smaller content mod that aims to improve the parts of terraria left in the dust, such as improving biomes and subclasses.
+
+New Content:
+	- Techniques: Techniques are new accessories that specify a weapon type, and grant a new right-click attack to all weapons of that type.
+	- Artifacts: Artifacts are accessories that have an activated ability. They use a new resource, artiface, upon pressing the binded key.
+	- Cleric Subclass: The Cleric subclass is a new support focused subclass option for magic. Cleric weapons, if you can even call them weapons, heal players intead of damaging enemies.
+
+Desert Update:
+	- New materials
+	- New weapons
+	- New artifacts
+	- A new technique
