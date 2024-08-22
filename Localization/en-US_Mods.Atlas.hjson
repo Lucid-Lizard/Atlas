@@ -52,7 +52,21 @@ Items: {
 
 	PadPaddle: {
 		DisplayName: Pad Paddle
-		Tooltip: ""
+		Tooltip:
+			'''
+			Left click to serve a prickly pear ball
+			Right click to swing and hit balls
+			'''
+	}
+
+	Comet: {
+		DisplayName: Comet
+		Tooltip:
+			'''
+			Left click to serve a meteor ball
+			Right click to swing and hit balls
+			When you hit a meteor ball, it will catch fire
+			'''
 	}
 }
 
@@ -69,6 +83,8 @@ Projectiles: {
 	ChargerSpearProjectile.DisplayName: Charger Spear Projectile
 	SpearTechniqueProjectile.DisplayName: Spear Technique Projectile
 	PongBall.DisplayName: Pong Ball
+	PricklyBall.DisplayName: Prickly Ball
+	MeteorBall.DisplayName: Meteor Ball
 }
 
 Buffs: {

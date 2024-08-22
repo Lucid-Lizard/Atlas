@@ -8,7 +8,10 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Assets\AutumnGrass.png" />
 	  <None Remove="Assets\BigTree.png" />
+	  <None Remove="Assets\SpringGrass.png" />
+	  <None Remove="Assets\WinterGrass.png" />
 	  <None Remove="Content\Buffs\ArtifactCooldown.png" />
 	  <None Remove="Content\Gores\SnakeGore0.png" />
 	  <None Remove="Content\Gores\SnakeGore1.png" />
@@ -19,13 +22,18 @@
 	  <None Remove="Content\Items\Desert\AntlionChitin.png" />
 	  <None Remove="Content\Items\Desert\ChargerSpear.png" />
 	  <None Remove="Content\Items\Desert\ChargerSpearProjectile.png" />
+	  <None Remove="Content\Items\Desert\GruntingStick.png" />
+	  <None Remove="Content\Items\Desert\PadPaddle.png" />
 	  <None Remove="Content\Items\Desert\SnakeEyes.png" />
 	  <None Remove="Content\Items\Desert\SnakeOil.png" />
 	  <None Remove="Content\Items\Desert\SnakeOilProjectile.png" />
 	  <None Remove="Content\Items\Desert\Snakeskin.png" />
 	  <None Remove="Content\Items\Desert\SnakestrikeTechnique.png" />
+	  <None Remove="Content\Items\Dev\SeasonalSwitchymajig.png" />
+	  <None Remove="Content\NPCs\Desert\ScorchingSun.png" />
 	  <None Remove="Content\NPCs\Desert\Snake.png" />
 	  <None Remove="Content\NPCs\Misc\Twister.png" />
+	  <None Remove="Content\Projectiles\PongBall.png" />
 	  <None Remove="Content\Projectiles\SpearTechniqueProjectile.png" />
 	  <None Remove="SpearTechniqueProjectile.png" />
 	</ItemGroup>

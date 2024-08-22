@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Atlas.Common.Prims;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Atlas.Content.Projectiles
 {
-    public class PongBall : ModProjectile
+    public abstract class PongBall : ModProjectile
     {
         public bool Served = false;
 
         public bool fadeOut = false;
 
         public int HitCount = 0;
+
+       
+        
+
+        public virtual void SetTrail()
+        {
+
+        }
 
         public enum HitType
         {
@@ -27,7 +38,12 @@ namespace Atlas.Content.Projectiles
             Tile
         }
 
-       
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = 12;
@@ -39,6 +55,8 @@ namespace Atlas.Content.Projectiles
             Projectile.aiStyle = -1;
             Projectile.penetrate = -1;
         }
+
+       
 
         public void ResetHit(HitType type, Entity Source, Item item = null)
         {
@@ -81,6 +99,11 @@ namespace Atlas.Content.Projectiles
         }
         public void PlayerHit(Player player, Item item)
         {
+            if (fadeOut)
+            {
+                return;
+            }
+
             Vector2 direction = Main.MouseWorld - player.Center;
 
             Vector2 velocity = new(item.shootSpeed, 0);
@@ -92,38 +115,36 @@ namespace Atlas.Content.Projectiles
 
             Projectile.velocity = velocity;
             Projectile.timeLeft = 180;
+
+            PlayerHitEffect();
         }
+
+        public virtual void PlayerHitEffect() { }
 
         public void NPCHit(NPC npc)
         {
+            if (fadeOut)
+            {
+                return;
+            }
             HitCount++;
-            /*Projectile.velocity *= -1;*/
+            
 
             Vector2 oldVelocity = Projectile.oldVelocity;
 
-            /*Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-
-            // If the projectile hits the left or right side of the tile, reverse the X velocity
-            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
-            {
-                Projectile.velocity.X = -oldVelocity.X;
-            }
-
-            // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
-            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
-            {
-                Projectile.velocity.Y = -oldVelocity.Y;
-            }*/
 
             Projectile.velocity *= -1;
 
             Projectile.timeLeft = 180;
+
+            HitNPCEFfect(npc);
         }
 
         public override void AI()
         {
             Vector2 vector = Projectile.velocity;
+
+            Projectile.rotation += MathHelper.ToRadians(10) * Math.Sign(Projectile.velocity.X);
 
             Projectile.velocity.Y += 0.16f;
 
@@ -133,7 +154,13 @@ namespace Atlas.Content.Projectiles
                 //Main.PlaySound(0, (int)this.center().X, (int)this.center().Y, 1);
             }
 
-            if ((Projectile.timeLeft <= 1 && !fadeOut) || HitCount > 30)
+            if(HitCount > 30)
+            {
+                Projectile.timeLeft = 15;
+                fadeOut = true;
+            }
+
+            if (Projectile.timeLeft <= 1 && !fadeOut)
             {
                 Projectile.timeLeft = 15;
                 fadeOut = true;
@@ -148,11 +175,33 @@ namespace Atlas.Content.Projectiles
             ResetHit(HitType.NPC, target);
         }
 
+        public virtual void HitNPCEFfect(NPC npc) { }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             TileHit();
 
             return false;
         }
+
+        public virtual void TileHitEffect() { }
+
+        public override bool PreDrawExtras()
+        {
+            for(int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i++)
+            {
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.oldPos[i] + (TextureAssets.Projectile[Type].Value.Size() / 2f ) - Main.screenPosition,
+                    null,
+                    Color.Lerp(Color.White * MathHelper.Lerp(1f, 0f, Projectile.alpha / 255f), new Color(0, 0, 0, 0), (float)i / (float)ProjectileID.Sets.TrailCacheLength[Type]),
+                    Projectile.rotation,
+                    TextureAssets.Projectile[Type].Value.Size() / 2f,
+                    1f,
+                    Microsoft.Xna.Framework.Graphics.SpriteEffects.None);
+            }
+
+            return true;
+        }
+
+
     }
 }

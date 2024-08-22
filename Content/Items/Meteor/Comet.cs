@@ -11,9 +11,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Atlas.Content.Items.Desert
+namespace Atlas.Content.Items.Meteor
 {
-    public class PadPaddle : ModItem
+    public class Comet : ModItem
     {
         public override void SetDefaults()
         {
@@ -24,8 +24,8 @@ namespace Atlas.Content.Items.Desert
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 25;
             Item.useAnimation = 25;
-            Item.shoot = ModContent.ProjectileType<PricklyBall>();
-            Item.shootSpeed = 6f;
+            Item.shoot = ModContent.ProjectileType<MeteorBall>();
+            Item.shootSpeed = 8f;
         }
 
         public override bool AltFunctionUse(Player player)
@@ -65,7 +65,7 @@ namespace Atlas.Content.Items.Desert
             player.itemRotation -= player.direction > 0 ? MathHelper.ToRadians(45) : MathHelper.ToRadians(-45);
         }
 
-       
+
 
         public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox)
         {
@@ -73,13 +73,13 @@ namespace Atlas.Content.Items.Desert
             Vector2 length = new(16 * 3f, 0);
             Vector2 end = start + length.RotatedBy(player.direction == 1 ? player.itemRotation : player.itemRotation - MathHelper.ToRadians(180f));
 
-           // Dust.QuickDustLine(start, end, 16, Color.Red);
+            // Dust.QuickDustLine(start, end, 16, Color.Red);
 
-            for(int i = 0; i < Main.maxProjectiles; i++)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile p = Main.projectile[i];
 
-                if(p.active &&p.ModProjectile is PongBall && Collision.CheckAABBvLineCollision(p.position, p.Hitbox.Size(), start, end)&& player.altFunctionUse < 2)
+                if (p.active && p.ModProjectile is PongBall && Collision.CheckAABBvLineCollision(p.position, p.Hitbox.Size(), start, end) && player.altFunctionUse < 2)
                 {
                     float rot1 = player.itemRotation - MathHelper.ToRadians(45);
                     float rot2 = player.itemRotation + MathHelper.ToRadians(45);
@@ -87,14 +87,15 @@ namespace Atlas.Content.Items.Desert
                     Vector2 dust1 = Vector2.UnitX.RotatedBy(rot1);
                     Vector2 dust2 = Vector2.UnitX.RotatedBy(rot2);
 
-                    Dust.NewDust(p.Center, 1, 1, DustID.Smoke, dust1.X, dust1.Y);
-                    Dust.NewDust(p.Center, 1, 1, DustID.Smoke, dust2.X, dust2.Y);
+                    Dust.NewDust(p.Center, 1, 1, DustID.MeteorHead, dust1.X, dust1.Y);
+                    Dust.NewDust(p.Center, 1, 1, DustID.MeteorHead, dust2.X, dust2.Y);
 
                     PongBall ball = p.ModProjectile as PongBall;
                     if (ball.Served)
                     {
                         ball.Projectile.velocity *= -1;
-                    } else
+                    }
+                    else
                     {
                         Vector2 direction = Main.MouseWorld - player.Center;
 
