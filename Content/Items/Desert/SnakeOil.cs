@@ -68,7 +68,7 @@ namespace Atlas.Content.Items.Desert
             {
                 Vector2 velocity = new(6, 0);
                 velocity = velocity.RotatedBy((Math.Tau / 25) * i);
-                Dust.NewDust(Projectile.Center, 16, 16, DustID.TintableDust, SpeedX: velocity.X, SpeedY: velocity.Y, newColor: new(71, 128, 19), Scale: 1.2f);
+                Dust.NewDust(Projectile.Center, 16, 16, DustID.TintableDust, SpeedX: velocity.X, SpeedY: velocity.Y, newColor: Color.LimeGreen, Scale: 1.2f);
             }
 
             for(int i = 0; i < Main.maxPlayers; i++)
@@ -83,6 +83,13 @@ namespace Atlas.Content.Items.Desert
                     //player.HealEffect(Projectile.damage, true);
                 }
             }
+        }
+
+        public override bool PreDrawExtras()
+        {
+            Primitives2D.DrawCircle(Main.spriteBatch, Projectile.Center - Main.screenPosition, 16 * 10, 36, Color.LimeGreen, 5);
+
+            return true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {

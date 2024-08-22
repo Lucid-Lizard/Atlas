@@ -39,11 +39,27 @@ Items: {
 		DisplayName: Snakestrike Technique
 		Tooltip: Right click to throw spears
 	}
+
+	SeasonalSwitchymajig: {
+		DisplayName: Seasonal Switchymajig
+		Tooltip: ""
+	}
+
+	GruntingStick: {
+		DisplayName: Grunting Stick
+		Tooltip: ""
+	}
+
+	PadPaddle: {
+		DisplayName: Pad Paddle
+		Tooltip: ""
+	}
 }
 
 NPCs: {
 	Snake.DisplayName: Snake
 	Twister.DisplayName: Twister
+	ScorchingSun.DisplayName: Scorching Sun
 }
 
 Projectiles: {
@@ -52,6 +68,7 @@ Projectiles: {
 	AntflingBowArrow.DisplayName: Antfling Bow Arrow
 	ChargerSpearProjectile.DisplayName: Charger Spear Projectile
 	SpearTechniqueProjectile.DisplayName: Spear Technique Projectile
+	PongBall.DisplayName: Pong Ball
 }
 
 Buffs: {
