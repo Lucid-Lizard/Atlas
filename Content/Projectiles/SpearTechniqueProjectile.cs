@@ -12,6 +12,8 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using System.Security.Cryptography.X509Certificates;
+using Atlas.Common.Prims;
+using Atlas.Common.Systems;
 
 namespace Atlas.Content.Projectiles
 {
@@ -47,6 +49,8 @@ namespace Atlas.Content.Projectiles
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+            ProjectileID.Sets.TrailCacheLength[Type] = 30;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
         }
 
         public override void SetDefaults()
@@ -66,6 +70,8 @@ namespace Atlas.Content.Projectiles
             Projectile.hide = true; // Makes the projectile completely invisible. We need this to draw our projectile behind enemies/tiles in DrawBehind()
         }
 
+        public PrimTrail trail;
+
         public int CopyID = -1;
 
         public override void OnSpawn(IEntitySource source)
@@ -75,7 +81,11 @@ namespace Atlas.Content.Projectiles
                 Projectile.Kill();
             }
 
-            
+            trail = new(Projectile.oldPos, Color.White * 0.25f, 3);
+            trail.WidthFallOff = true;
+            trail.Center = true;
+            trail.ParentScale = new(Projectile.getRect().Size(),0);
+            trail.Initialize();
 
             CopyID = (int)Projectile.ai[0];
 
@@ -96,6 +106,9 @@ namespace Atlas.Content.Projectiles
             if (IsStickingToTarget)
             {
                 StickyAI();
+                Array.Clear(Projectile.oldPos);
+
+               
             }
             else
             {
@@ -247,6 +260,8 @@ namespace Atlas.Content.Projectiles
             Texture2D Tex = TextureAssets.Projectile[CopyID].Value;
 
             Main.EntitySpriteDraw(Tex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation + (Projectile.spriteDirection > 0 ? MathHelper.ToRadians(45) : MathHelper.ToRadians(135)), Vector2.Zero, 1f, SpriteEffects.None);
+
+            trail.Draw();
 
             return false;
         }

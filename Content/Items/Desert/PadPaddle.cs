@@ -26,6 +26,7 @@ namespace Atlas.Content.Items.Desert
             Item.useAnimation = 25;
             Item.shoot = ModContent.ProjectileType<PricklyBall>();
             Item.shootSpeed = 6f;
+            Item.UseSound = SoundID.Item1;
         }
 
         public override bool AltFunctionUse(Player player)

@@ -1,4 +1,5 @@
 ﻿using Atlas.Common.Prims;
+using Atlas.Common.Systems;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Atlas.Content.Projectiles
 
         public int HitCount = 0;
 
-       
+        public PrimTrail trail;
         
 
         public virtual void SetTrail()
@@ -56,7 +57,13 @@ namespace Atlas.Content.Projectiles
             Projectile.penetrate = -1;
         }
 
-       
+        public override void OnSpawn(IEntitySource source)
+        {
+            trail = new(Projectile.oldPos, Color.White, 5);
+            trail.Initialize();
+        }
+
+
 
         public void ResetHit(HitType type, Entity Source, Item item = null)
         {
@@ -154,11 +161,7 @@ namespace Atlas.Content.Projectiles
                 //Main.PlaySound(0, (int)this.center().X, (int)this.center().Y, 1);
             }
 
-            if(HitCount > 30)
-            {
-                Projectile.timeLeft = 15;
-                fadeOut = true;
-            }
+           
 
             if (Projectile.timeLeft <= 1 && !fadeOut)
             {
@@ -186,20 +189,22 @@ namespace Atlas.Content.Projectiles
 
         public virtual void TileHitEffect() { }
 
-        public override bool PreDrawExtras()
+
+        public override bool PreDraw(ref Color lightColor)
         {
-            for(int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i++)
-            {
-                Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.oldPos[i] + (TextureAssets.Projectile[Type].Value.Size() / 2f ) - Main.screenPosition,
-                    null,
-                    Color.Lerp(Color.White * MathHelper.Lerp(1f, 0f, Projectile.alpha / 255f), new Color(0, 0, 0, 0), (float)i / (float)ProjectileID.Sets.TrailCacheLength[Type]),
-                    Projectile.rotation,
-                    TextureAssets.Projectile[Type].Value.Size() / 2f,
-                    1f,
-                    Microsoft.Xna.Framework.Graphics.SpriteEffects.None);
-            }
+            SetTrail();
+            
+
+            trail.Draw();
 
             return true;
+        }
+        public override void OnKill(int timeLeft)
+        {
+            if(trail != null)
+            {
+                trail.kill = true;
+            }
         }
 
 

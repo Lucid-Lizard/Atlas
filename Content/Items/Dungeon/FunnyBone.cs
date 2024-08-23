@@ -3,29 +3,28 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 
-namespace Atlas.Content.Items.Meteor
+namespace Atlas.Content.Items.Dungeon
 {
-    public class Comet : ModItem
+    public class FunnyBone : ModItem
     {
         public override void SetDefaults()
         {
             Item.width = 30;
             Item.height = 30;
-            Item.damage = 24;
+            Item.damage = 47;
             Item.DamageType = DamageClass.Ranged;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 25;
             Item.useAnimation = 25;
-            Item.shoot = ModContent.ProjectileType<MeteorBall>();
-            Item.shootSpeed = 8f;
+            Item.shoot = ModContent.ProjectileType<SpiritBall>();
+            Item.shootSpeed = 9f;
             Item.UseSound = SoundID.Item1;
         }
 
@@ -51,7 +50,7 @@ namespace Atlas.Content.Items.Meteor
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, new Vector2(0, -7), type, damage, knockback);
+            Projectile.NewProjectile(source, position, new Vector2(0, -1), type, damage, knockback);
 
             return false;
         }
@@ -88,8 +87,8 @@ namespace Atlas.Content.Items.Meteor
                     Vector2 dust1 = Vector2.UnitX.RotatedBy(rot1);
                     Vector2 dust2 = Vector2.UnitX.RotatedBy(rot2);
 
-                    Dust.NewDust(p.Center, 1, 1, DustID.MeteorHead, dust1.X, dust1.Y);
-                    Dust.NewDust(p.Center, 1, 1, DustID.MeteorHead, dust2.X, dust2.Y);
+                    Dust.NewDust(p.Center, 1, 1, DustID.Bone, dust1.X, dust1.Y);
+                    Dust.NewDust(p.Center, 1, 1, DustID.Bone, dust2.X, dust2.Y);
 
                     PongBall ball = p.ModProjectile as PongBall;
                     if (ball.Served)

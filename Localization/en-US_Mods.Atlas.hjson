@@ -68,12 +68,23 @@ Items: {
 			When you hit a meteor ball, it will catch fire
 			'''
 	}
+
+	HeartPerfume: {
+		DisplayName: Heart Perfume
+		Tooltip: Using health potions causes them to be released as a gas that heals all teammates and friendly npcs for half of its health value
+	}
+
+	FunnyBone: {
+		DisplayName: Funny Bone
+		Tooltip: ""
+	}
 }
 
 NPCs: {
 	Snake.DisplayName: Snake
 	Twister.DisplayName: Twister
 	ScorchingSun.DisplayName: Scorching Sun
+	ElderMimic.DisplayName: Elder Mimic
 }
 
 Projectiles: {
@@ -85,6 +96,9 @@ Projectiles: {
 	PongBall.DisplayName: Pong Ball
 	PricklyBall.DisplayName: Prickly Ball
 	MeteorBall.DisplayName: Meteor Ball
+	TumbleWeed.DisplayName: Tumble Weed
+	HeartPoof.DisplayName: Heart Poof
+	SpiritBall.DisplayName: Spirit Ball
 }
 
 Buffs: {

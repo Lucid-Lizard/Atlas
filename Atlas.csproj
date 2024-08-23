@@ -11,7 +11,10 @@
 	  <None Remove="Assets\AutumnGrass.png" />
 	  <None Remove="Assets\BigTree.png" />
 	  <None Remove="Assets\SpringGrass.png" />
+	  <None Remove="Assets\TrailTextures\spark_07.png" />
 	  <None Remove="Assets\WinterGrass.png" />
+	  <None Remove="Common\Systems\BigTree\BigTree.png" />
+	  <None Remove="Common\Systems\TumbleWeed.png" />
 	  <None Remove="Content\Buffs\ArtifactCooldown.png" />
 	  <None Remove="Content\Gores\SnakeGore0.png" />
 	  <None Remove="Content\Gores\SnakeGore1.png" />
@@ -30,11 +33,19 @@
 	  <None Remove="Content\Items\Desert\Snakeskin.png" />
 	  <None Remove="Content\Items\Desert\SnakestrikeTechnique.png" />
 	  <None Remove="Content\Items\Dev\SeasonalSwitchymajig.png" />
+	  <None Remove="Content\Items\Dungeon\Funnybone.png" />
+	  <None Remove="Content\Items\Meteor\Comet.png" />
+	  <None Remove="Content\Items\Misc\HeartPerfume.png" />
+	  <None Remove="Content\Items\Misc\HeartPoof.png" />
+	  <None Remove="Content\NPCs\Desert\ElderMimic.png" />
 	  <None Remove="Content\NPCs\Desert\ScorchingSun.png" />
 	  <None Remove="Content\NPCs\Desert\Snake.png" />
 	  <None Remove="Content\NPCs\Misc\Twister.png" />
-	  <None Remove="Content\Projectiles\PongBall.png" />
+	  <None Remove="Content\Projectiles\MeteorBall.png" />
+	  <None Remove="Content\Projectiles\MeteorBallEffect.png" />
+	  <None Remove="Content\Projectiles\PricklyBall.png" />
 	  <None Remove="Content\Projectiles\SpearTechniqueProjectile.png" />
+	  <None Remove="Content\Projectiles\SpiritBall.png" />
 	  <None Remove="SpearTechniqueProjectile.png" />
 	</ItemGroup>
 

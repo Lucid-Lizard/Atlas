@@ -19,6 +19,7 @@ namespace Atlas.Content.Projectiles
             Projectile.width = 16;
             Projectile.height = 16;
         }
+
         public override void PlayerHitEffect()
         {
             PlayerHit = true;
@@ -29,6 +30,8 @@ namespace Atlas.Content.Projectiles
         {
             npc.AddBuff(BuffID.OnFire, 120);
             PlayerHit = false;
+
+           
         }
 
         public override void TileHitEffect()
@@ -36,30 +39,16 @@ namespace Atlas.Content.Projectiles
             PlayerHit = false;
         }
 
-        
-        public override bool PreDrawExtras()
+
+        public override void SetTrail()
         {
-            if (!PlayerHit)
-            {
-                base.PreDrawExtras();
-            } else
-            {
-                Texture2D effect = ModContent.Request<Texture2D>("Atlas/Content/Projectiles/MeteorBallEffect").Value;
-
-                for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[Type]; i++)
-                {
-                    Main.EntitySpriteDraw(effect, Projectile.oldPos[i] + (effect.Size() / 2f) - Main.screenPosition,
-                        null,
-                        Color.Lerp(new Color(255, 250, 127) * MathHelper.Lerp(1f, 0f, Projectile.alpha / 255f), new Color(249, 75, 7, 0), (float)i / (float)ProjectileID.Sets.TrailCacheLength[Type]),
-                        Projectile.rotation,
-                        TextureAssets.Projectile[Type].Value.Size() / 2f,
-                        1.1f,
-                        Microsoft.Xna.Framework.Graphics.SpriteEffects.None);
-                }
-            }
-            
-
-            return true;
+            //trail.pixelated = true;
+            trail.Center = true;
+            Vector2 scale = Projectile.getRect().Size();
+            trail.ParentScale = new Vector3(scale, 0);
+            trail.Width = 5;
+            trail.Color = (PlayerHit ? Color.Yellow : Color.White ) * 0.25f;
+            trail.WidthFallOff = true;
         }
 
     }

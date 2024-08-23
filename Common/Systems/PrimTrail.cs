@@ -86,6 +86,10 @@ namespace Atlas.Common.Systems
         public Effect Shader;
         public Texture2D Texture;
         public bool kill = false;
+
+        public bool Center = false;
+        public Vector3 ParentScale = Vector3.Zero;
+
         protected virtual void Update() { }
         //protected virtual void OnKill() { }
         protected virtual void CustomDraw(GraphicsDevice graphicsDevice) { }
@@ -177,8 +181,8 @@ namespace Atlas.Common.Systems
                 Vector3 normal = new(current.DirectionTo(next).RotatedBy(lastpoint ? MathHelper.PiOver2 : -MathHelper.PiOver2) * Width, 0);
                 if (WidthFallOff)
                     normal *= progress;
-                Vertices[i * 2] = new(new Vector3(current, 0) + normal, Color, i % 2 == 0 ? new(0, 0) : new(1, 0));
-                Vertices[i * 2 + 1] = new(new Vector3(current, 0) - normal, Color, i % 2 == 0 ? new(0, 1) : new(1, 1));
+                Vertices[i * 2] = new(new Vector3(current, 0) + normal + (ParentScale / 2), Color, i % 2 == 0 ? new(0, 0) : new(1, 0));
+                Vertices[i * 2 + 1] = new(new Vector3(current, 0) - normal + (ParentScale / 2), Color, i % 2 == 0 ? new(0, 1) : new(1, 1));
 
                 /*Dust d = Dust.NewDustPerfect(new Vector2((int)Vertices[i * 2].Position.X, (int)Vertices[i * 2].Position.Y), DustID.AmberBolt, Vector2.Zero);
                 d.noGravity = true;
