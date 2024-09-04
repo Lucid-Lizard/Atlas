@@ -10,7 +10,12 @@ namespace Atlas.Content.Projectiles
 {
     public class MeteorBall : PongBall
     {
-        public bool PlayerHit;
+        
+
+        public override void BallPhysics()
+        {
+            Gravity += 0.1f;
+        }
 
         public override void SetDefaults()
         {
@@ -20,24 +25,21 @@ namespace Atlas.Content.Projectiles
             Projectile.height = 16;
         }
 
-        public override void PlayerHitEffect()
+        /*public override void PlayerHitEffect()
         {
-            PlayerHit = true;
             Array.Clear(Projectile.oldPos);
-        }
+        }*/
 
         public override void HitNPCEFfect(NPC npc)
         {
-            npc.AddBuff(BuffID.OnFire, 120);
-            PlayerHit = false;
+            if (PlayerJustHit)
+            {
+                npc.AddBuff(BuffID.OnFire, 120);
 
+            }
            
         }
 
-        public override void TileHitEffect()
-        {
-            PlayerHit = false;
-        }
 
 
         public override void SetTrail()
@@ -47,7 +49,7 @@ namespace Atlas.Content.Projectiles
             Vector2 scale = Projectile.getRect().Size();
             trail.ParentScale = new Vector3(scale, 0);
             trail.Width = 5;
-            trail.Color = (PlayerHit ? Color.Yellow : Color.White ) * 0.25f;
+            trail.Color = (PlayerJustHit ? Color.Yellow : Color.White ) * 0.25f;
             trail.WidthFallOff = true;
         }
 

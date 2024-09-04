@@ -19,6 +19,7 @@
 	  <None Remove="Content\Gores\SnakeGore0.png" />
 	  <None Remove="Content\Gores\SnakeGore1.png" />
 	  <None Remove="Content\Gores\SnakeGore2.png" />
+	  <None Remove="Content\Items\Celestial\PongPing.png" />
 	  <None Remove="Content\Items\Desert\AntflingBow.png" />
 	  <None Remove="Content\Items\Desert\AntflingBowAnt.png" />
 	  <None Remove="Content\Items\Desert\AntflingBowArrow.png" />
@@ -35,17 +36,26 @@
 	  <None Remove="Content\Items\Dev\SeasonalSwitchymajig.png" />
 	  <None Remove="Content\Items\Dungeon\Funnybone.png" />
 	  <None Remove="Content\Items\Meteor\Comet.png" />
+	  <None Remove="Content\Items\Meteor\SoloCupBuff.png" />
 	  <None Remove="Content\Items\Misc\HeartPerfume.png" />
 	  <None Remove="Content\Items\Misc\HeartPoof.png" />
+	  <None Remove="Content\Items\Misc\SoloCup.png" />
+	  <None Remove="Content\Items\Misc\SoloCupProjectile.png" />
+	  <None Remove="Content\Items\Ocean\Chowder.png" />
 	  <None Remove="Content\NPCs\Desert\ElderMimic.png" />
 	  <None Remove="Content\NPCs\Desert\ScorchingSun.png" />
 	  <None Remove="Content\NPCs\Desert\Snake.png" />
+	  <None Remove="Content\NPCs\Desert\SnakeTail.png" />
 	  <None Remove="Content\NPCs\Misc\Twister.png" />
+	  <None Remove="Content\Projectiles\BlackPearlBall.png" />
 	  <None Remove="Content\Projectiles\MeteorBall.png" />
 	  <None Remove="Content\Projectiles\MeteorBallEffect.png" />
+	  <None Remove="Content\Projectiles\PinkPearlBall.png" />
 	  <None Remove="Content\Projectiles\PricklyBall.png" />
 	  <None Remove="Content\Projectiles\SpearTechniqueProjectile.png" />
 	  <None Remove="Content\Projectiles\SpiritBall.png" />
+	  <None Remove="Content\Projectiles\VortexBall.png" />
+	  <None Remove="Content\Projectiles\WhitePearlBall.png" />
 	  <None Remove="SpearTechniqueProjectile.png" />
 	</ItemGroup>
 

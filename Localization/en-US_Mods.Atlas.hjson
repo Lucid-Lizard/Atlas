@@ -76,6 +76,59 @@ Items: {
 
 	FunnyBone: {
 		DisplayName: Funny Bone
+		Tooltip:
+			'''
+			Left click to serve a spirit ball
+			Right click to swing and hit balls
+			spirit balls do not have gravity
+			'''
+	}
+
+	WoodenPaddle: {
+		DisplayName: Wooden Paddle
+		Tooltip:
+			'''
+			Left click to serve a ball
+			Right click to swing and hit balls
+			'''
+	}
+
+	TopspinTechnique: {
+		DisplayName: Topspin Technique
+		Tooltip: Balls hit by battle paddles will home-in on enemies
+	}
+
+	PixiePaddle: {
+		DisplayName: Pixie Paddle
+		Tooltip:
+			'''
+			Left click to serve a pixie ball
+			Right click to swing and hit balls
+			Pixie balls accelerate naturally
+			'''
+	}
+
+	SoloCup: {
+		DisplayName: Solo Cup
+		Tooltip:
+			'''
+			Summons a solo cup that follow below your cursor
+			When a ball falls into the cup, you deal 10 extra damage for 6 seconds
+			'''
+	}
+
+	PongPing: {
+		DisplayName: Pong Ping
+		Tooltip:
+			'''
+			Right click to serve a vortex ball
+			Left click to swing and hit balls
+			Vortex balls come back to you after hitting enemies
+			'''
+	}
+
+	Chowder: {
+		DisplayName: Chowder
 		Tooltip: ""
 	}
 }
@@ -99,11 +152,23 @@ Projectiles: {
 	TumbleWeed.DisplayName: Tumble Weed
 	HeartPoof.DisplayName: Heart Poof
 	SpiritBall.DisplayName: Spirit Ball
+	RegularBall.DisplayName: Regular Ball
+	PixieBall.DisplayName: Pixie Ball
+	SoloCupProjectile.DisplayName: Solo Cup Projectile
+	VortexBall.DisplayName: Vortex Ball
+	BlackPearlBall.DisplayName: Black Pearl Ball
+	PinkPearlBall.DisplayName: Pink Pearl Ball
+	WhitePearlBall.DisplayName: White Pearl Ball
 }
 
 Buffs: {
 	ArtifactCooldown: {
 		DisplayName: Artifact Cooldown
 		Description: Mods.Atlas.Buffs.ArtifactCooldown.Description
+	}
+
+	SoloCupBuff: {
+		Description: Mods.Atlas.Buffs.SoloCupBuff.Description
+		DisplayName: Solo Cup Buff
 	}
 }

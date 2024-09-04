@@ -28,6 +28,15 @@ namespace Atlas.Content.Items.Dungeon
             Item.UseSound = SoundID.Item1;
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddIngredient(ItemID.Bone, 7)
+                .AddIngredient(ItemID.WaterCandle, 1)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+
         public override bool AltFunctionUse(Player player)
         {
             return true;

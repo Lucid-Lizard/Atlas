@@ -11,8 +11,11 @@ using Terraria;
 
 namespace Atlas.Common.Systems
 {
+
     internal class PrimHandler : ModSystem
     {
+        internal UserInterface MyInterface;
+
         static internal List<PrimTrail> trails = [];
         public override void PostUpdateProjectiles()
         {

@@ -1,5 +1,7 @@
 ﻿using Atlas.Common.Prims;
 using Atlas.Common.Systems;
+using Atlas.Content.Items.Desert;
+using Atlas.Content.Items.Misc;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,9 +26,19 @@ namespace Atlas.Content.Projectiles
 
         public int HitCount = 0;
 
-        public PrimTrail trail;
-        
+        public bool PlayerJustHit = false;
+        public Player LastHitter;
 
+        public PrimTrail trail;
+
+        public float Gravity = 0.16f;
+        public float WindResistance = 0.99f;
+        public float Friction = 0.85f;
+
+        public virtual void BallPhysics()
+        {
+
+        }
         public virtual void SetTrail()
         {
 
@@ -55,6 +67,8 @@ namespace Atlas.Content.Projectiles
             Projectile.timeLeft = 180;
             Projectile.aiStyle = -1;
             Projectile.penetrate = -1;
+
+            BallPhysics();
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -77,39 +91,44 @@ namespace Atlas.Content.Projectiles
                 {
                     NPCHit(Source as NPC);
                 }
-                else
-                {
-                    TileHit();
-                }
+                
             }
         }
 
-        public void TileHit()
+        /*public void TileHit(Vector2 oldVelocity)
         {
-            Vector2 oldVelocity = Projectile.oldVelocity;
+             oldVelocity = Projectile.oldVelocity;
 
-            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-            SoundEngine.PlaySound(new SoundStyle("Atlas/Sounds/PongBall") { PitchVariance = 0.2f }, Projectile.position);
+             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+             SoundEngine.PlaySound(new SoundStyle("Atlas/Sounds/PongBall") { PitchVariance = 0.2f }, Projectile.position);
 
-            // If the projectile hits the left or right side of the tile, reverse the X velocity
-            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
-            {
-                Projectile.velocity.X = -oldVelocity.X;
-            }
+             // If the projectile hits the left or right side of the tile, reverse the X velocity
+             if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
+             {
+                 Projectile.velocity.X = -oldVelocity.X;
+             }
 
-            // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
-            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
-            {
-                Projectile.velocity.Y = -oldVelocity.Y;
-            }
-            
-        }
+             // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
+             if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
+             {
+                 Projectile.velocity.Y = -oldVelocity.Y ;
+             }
+
+           
+
+
+            LastHitter = null;
+
+        }*/
+
         public void PlayerHit(Player player, Item item)
         {
             if (fadeOut)
             {
                 return;
             }
+
+            PlayerJustHit = true;
 
             Vector2 direction = Main.MouseWorld - player.Center;
 
@@ -122,6 +141,8 @@ namespace Atlas.Content.Projectiles
 
             Projectile.velocity = velocity;
             Projectile.timeLeft = 180;
+
+            LastHitter = player;
 
             PlayerHitEffect();
         }
@@ -140,28 +161,120 @@ namespace Atlas.Content.Projectiles
             Vector2 oldVelocity = Projectile.oldVelocity;
 
 
-            Projectile.velocity *= -1;
+            Projectile.velocity *= -1 * Friction;
 
             Projectile.timeLeft = 180;
 
             HitNPCEFfect(npc);
+
+            PlayerJustHit = false;
+
+            LastHitter = null;
         }
 
         public override void AI()
+        {
+            if (LastHitter != null)
+            {
+                if (LastHitter.GetModPlayer<TopspinTechniquePlayer>().Active) { TopspinAI(); }
+                else { CommonAI(); }
+            }
+            else
+            {
+                CommonAI();
+            }
+        }
+
+        private NPC HomingTarget
+        {
+            get => Projectile.ai[0] == 0 ? null : Main.npc[(int)Projectile.ai[0] - 1];
+            set
+            {
+                Projectile.ai[0] = value == null ? 0 : value.whoAmI + 1;
+            }
+        }
+
+        public void TopspinAI()
+        {
+            if (HomingTarget == null)
+            {
+                HomingTarget = FindClosestNPC(400f);
+            }
+
+            if (HomingTarget != null && !IsValidTarget(HomingTarget))
+            {
+                HomingTarget = null;
+            }
+
+            if (HomingTarget == null)
+            {
+                LastHitter = null;
+                return;
+            }
+
+            float length = Projectile.velocity.Length();
+            float targetAngle = Projectile.AngleTo(HomingTarget.Center);
+            Projectile.velocity = Projectile.velocity.ToRotation().AngleTowards(targetAngle, MathHelper.ToRadians(10)).ToRotationVector2() * length;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+        }
+
+        public NPC FindClosestNPC(float maxDetectDistance)
+        {
+            NPC closestNPC = null;
+
+            // Using squared values in distance checks will let us skip square root calculations, drastically improving this method's speed.
+            float sqrMaxDetectDistance = maxDetectDistance * maxDetectDistance;
+
+            // Loop through all NPCs
+            foreach (var target in Main.ActiveNPCs)
+            {
+                // Check if NPC able to be targeted. 
+                if (IsValidTarget(target))
+                {
+                    // The DistanceSquared function returns a squared distance between 2 points, skipping relatively expensive square root calculations
+                    float sqrDistanceToTarget = Vector2.DistanceSquared(target.Center, Projectile.Center);
+
+                    // Check if it is within the radius
+                    if (sqrDistanceToTarget < sqrMaxDetectDistance)
+                    {
+                        sqrMaxDetectDistance = sqrDistanceToTarget;
+                        closestNPC = target;
+                    }
+                }
+            }
+
+            return closestNPC;
+        }
+
+        public bool IsValidTarget(NPC target)
+        {
+            // This method checks that the NPC is:
+            // 1. active (alive)
+            // 2. chaseable (e.g. not a cultist archer)
+            // 3. max life bigger than 5 (e.g. not a critter)
+            // 4. can take damage (e.g. moonlord core after all it's parts are downed)
+            // 5. hostile (!friendly)
+            // 6. not immortal (e.g. not a target dummy)
+            // 7. doesn't have solid tiles blocking a line of sight between the projectile and NPC
+            return target.CanBeChasedBy() && Collision.CanHit(Projectile.Center, 1, 1, target.position, target.width, target.height);
+        }
+
+        public void CommonAI()
         {
             Vector2 vector = Projectile.velocity;
 
             Projectile.rotation += MathHelper.ToRadians(10) * Math.Sign(Projectile.velocity.X);
 
-            Projectile.velocity.Y += 0.16f;
+            Projectile.velocity.Y += Gravity;
+            Projectile.velocity.X *= WindResistance;
 
-            if((Projectile.velocity.X != vector.X && (vector.X < -3f || vector.X > 3f)) || (Projectile.velocity.Y != vector.Y && (vector.Y < -3f || vector.Y > 3f)))
+            if ((Projectile.velocity.X != vector.X && (vector.X < -3f || vector.X > 3f)) || (Projectile.velocity.Y != vector.Y && (vector.Y < -3f || vector.Y > 3f)))
             {
                 Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
                 //Main.PlaySound(0, (int)this.center().X, (int)this.center().Y, 1);
             }
 
-           
+
 
             if (Projectile.timeLeft <= 1 && !fadeOut)
             {
@@ -182,7 +295,22 @@ namespace Atlas.Content.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            TileHit();
+            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+            SoundEngine.PlaySound(new SoundStyle("Atlas/Sounds/PongBall") { PitchVariance = 0.2f }, Projectile.position);
+
+            // If the projectile hits the left or right side of the tile, reverse the X velocity
+            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
+            {
+                Projectile.velocity.X = -oldVelocity.X;
+            }
+
+            // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
+            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
+            {
+                Projectile.velocity.Y = -oldVelocity.Y;
+            }
+
+
 
             return false;
         }

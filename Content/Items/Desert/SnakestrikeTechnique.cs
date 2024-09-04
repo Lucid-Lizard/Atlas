@@ -12,6 +12,10 @@ namespace Atlas.Content.Items.Desert
 {
     public class SnakestrikeTechnique : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            TechniqueRegistry.Registry.Add(Type, TechniqueRegistry.TechniqueType.Spear);
+        }
         public override void SetDefaults()
         {
             Item.width = 30;

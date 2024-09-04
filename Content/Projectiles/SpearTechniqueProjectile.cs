@@ -118,18 +118,12 @@ namespace Atlas.Content.Projectiles
 
         private void NormalAI()
         {
-            GravityDelayTimer++; // doesn't make sense.
-
-            // For a little while, the javelin will travel with the same speed, but after this, the javelin drops velocity very quickly.
-            if (GravityDelayTimer >= GravityDelay)
-            {
-                GravityDelayTimer = GravityDelay;
 
                 // wind resistance
-                Projectile.velocity.X *= 0.98f;
+                Projectile.velocity.X *= 0.994f;
                 // gravity
-                Projectile.velocity.Y += 0.35f;
-            }
+                Projectile.velocity.Y += 0.18f;
+            
 
             // Offset the rotation by 90 degrees because the sprite is oriented vertically.
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);

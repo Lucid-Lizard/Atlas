@@ -29,6 +29,15 @@ namespace Atlas.Content.Items.Meteor
             Item.UseSound = SoundID.Item1;
         }
 
+        public override void AddRecipes()
+        {
+            CreateRecipe(1)
+                .AddIngredient(ItemID.MeteoriteBar, 7)
+                .AddIngredient(ItemID.FallenStar, 5)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+
         public override bool AltFunctionUse(Player player)
         {
             return true;

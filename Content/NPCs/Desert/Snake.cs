@@ -1,4 +1,5 @@
-﻿using Atlas.Content.Items.Desert;
+﻿using Atlas.Common.Systems;
+using Atlas.Content.Items.Desert;
 using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -17,15 +19,11 @@ namespace Atlas.Content.NPCs.Desert
 {
     public class Snake : ModNPC
     {
-        public override void SetStaticDefaults()
-        {
-            Main.npcFrameCount[Type] = 4;
-        }
         public override void SetDefaults()
         {
 
-            NPC.width = 36;
-            NPC.height = 30;
+            NPC.width = 22;
+            NPC.height = 28;
             NPC.aiStyle = -1;
             NPC.lifeMax = 200;
             NPC.HitSound = SoundID.NPCHit23;
@@ -42,7 +40,7 @@ namespace Atlas.Content.NPCs.Desert
         float animFrameTimer = 0;
         int animFrameMax = 10;
 
-        public override void FindFrame(int frameHeight)
+        /*public override void FindFrame(int frameHeight)
         {
             animFrameTimer += 1;
             if(animFrameTimer > animFrameMax)
@@ -56,7 +54,8 @@ namespace Atlas.Content.NPCs.Desert
             }
 
             NPC.frame.Y = (frameHeight) * (int)NPC.frameCounter;
-        }
+        }*/
+        
 
         public override void AI()
         {
@@ -91,16 +90,17 @@ namespace Atlas.Content.NPCs.Desert
             return spawnInfo.Player.ZoneDesert ? 4f : 0;
         }
 
-       /* public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default,null, default);
-            spriteBatch.Draw(TextureAssets.Npc[Type].Value, NPC.position, NPC.frame, drawColor);
+        /* public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+         {
+             spriteBatch.End();
+             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, default, default, default,null, default);
+             spriteBatch.Draw(TextureAssets.Npc[Type].Value, NPC.position, NPC.frame, drawColor);
 
 
-            return false;
-        }*/
+             return false;
+         }*/
 
+       
         public override void OnKill()
         {
             Gore.NewGore(NPC.GetSource_Death(), NPC.Center, Utils.NextVector2Circular(Main.rand, 5, 5), Mod.Find<ModGore>("SnakeGore0").Type);

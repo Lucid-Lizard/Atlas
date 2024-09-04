@@ -12,6 +12,13 @@ namespace Atlas.Content.Projectiles
 {
     public class SpiritBall : PongBall
     {
+        public override void BallPhysics()
+        {
+            Gravity = 0;
+            Friction = 0.95f;
+            WindResistance = 0.99f;
+        }
+
         public override void SetTrail()
         {
             trail.Center = true;
@@ -24,37 +31,6 @@ namespace Atlas.Content.Projectiles
             trail.WidthFallOff = true;
         }
 
-        public override void AI()
-        {
-            Vector2 vector = Projectile.velocity;
-
-            Projectile.rotation += MathHelper.ToRadians(10) * Math.Sign(Projectile.velocity.X);
-
-            
-
-            if ((Projectile.velocity.X != vector.X && (vector.X < -3f || vector.X > 3f)) || (Projectile.velocity.Y != vector.Y && (vector.Y < -3f || vector.Y > 3f)))
-            {
-                Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-                //Main.PlaySound(0, (int)this.center().X, (int)this.center().Y, 1);
-            }
-
-            if (HitCount > 30)
-            {
-                Projectile.timeLeft = 15;
-                fadeOut = true;
-            }
-
-            if (Projectile.timeLeft <= 1 && !fadeOut)
-            {
-                Projectile.timeLeft = 15;
-                fadeOut = true;
-            }
-            if (fadeOut)
-            {
-                Projectile.alpha = (int)MathHelper.Lerp(0, 225, (15 - Projectile.timeLeft) / 15f);
-            }
-
-            Projectile.velocity *= 0.99f;
-        }
+        
     }
 }
